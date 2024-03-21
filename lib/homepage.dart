@@ -69,3 +69,102 @@ class _HomepageState extends State<Homepage> {
     );
   }
 }
+class UserDataDisplay extends StatelessWidget {
+  final Map<String, dynamic> userData;
+
+  const UserDataDisplay({Key? key, required this.userData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final results = userData['results'][0];
+    final String name =
+        '${results['name']['title']}. ${results['name']['first']} ${results['name']['last']}';
+    final String gender = results['gender'];
+    final String country = results['location']['country'];
+    final String email = results['email'];
+    final String username = results['login']['username'];
+    final String age = results['dob']['age'].toString();
+    final String phoneNumber = results['phone'];
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        // Implement your refresh logic here
+      },
+      child: ListView(
+        children: [
+          SizedBox(height: 20),
+          Center(
+            child: CircleAvatar(
+              radius: 80,
+              backgroundImage: NetworkImage(results['picture']['large']),
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            '$name',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(height: 20),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            elevation: 4,
+            child: ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Gender'),
+              subtitle: Text(gender),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            elevation: 4,
+            child: ListTile(
+              leading: Icon(Icons.location_city),
+              title: Text('Country'),
+              subtitle: Text(country),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            elevation: 4,
+            child: ListTile(
+              leading: Icon(Icons.email),
+              title: Text('Email'),
+              subtitle: Text(email),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            elevation: 4,
+            child: ListTile(
+              leading: Icon(Icons.person_outline),
+              title: Text('Username'),
+              subtitle: Text(username),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            elevation: 4,
+            child: ListTile(
+              leading: Icon(Icons.calendar_today),
+              title: Text('Age'),
+              subtitle: Text(age),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            elevation: 4,
+            child: ListTile(
+              leading: Icon(Icons.phone),
+              title: Text('Phone Number'),
+              subtitle: Text(phoneNumber),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
